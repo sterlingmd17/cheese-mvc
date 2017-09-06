@@ -6,7 +6,7 @@ import javax.validation.constraints.Size;
 public class Cheese {
 
     @NotNull
-    @Size(min=3, max=15)
+    @Size(min=3, max=15, message="YO NAME EITHER TO SMALL OR TO BIG!")
     private String name;
 
     @NotNull

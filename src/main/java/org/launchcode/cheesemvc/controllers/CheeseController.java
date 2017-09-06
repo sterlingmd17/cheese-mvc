@@ -26,6 +26,7 @@ public class CheeseController {
         model.addAttribute("cheeses", CheeseData.getAll());
         model.addAttribute("title", "My Cheeses");
 
+
         return "cheese/index";
     }
 
@@ -73,18 +74,26 @@ public class CheeseController {
 
         model.addAttribute("title", "Edit Cheese");
         model.addAttribute("cheese", theCheese );
+        model.addAttribute("cheeseTypes", CheeseType.values());
       return "cheese/edit";
 
     }
 
     @RequestMapping(value = "edit", method = RequestMethod.POST)
-    public String processEditForm(@RequestParam int cheeseId,
-                                  @RequestParam String name,
-                                  @RequestParam String description){
+    public String processEditForm(@RequestParam Integer cheeseId,
+                                  @RequestParam @Valid String name,
+                                  @RequestParam @Valid String description,
+                                  @RequestParam CheeseType type,
+                                  Errors errors){
+        if( errors.hasErrors()){
+            return "edit";
+        }
 
         Cheese theCheese = CheeseData.getById(cheeseId);
         theCheese.setName(name);
         theCheese.setDescription(description);
+        theCheese.setType(type);
+
         return "redirect:";
     }
 
